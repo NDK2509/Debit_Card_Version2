@@ -9,7 +9,7 @@ public class Check {
 
     private static boolean isLong(String strNum){
         try {
-            return Long.parseLong(strNum) > 0;
+            return Long.parseLong(strNum) >= 0;
         } catch (Exception e) {return false;}
     }
     public static boolean uniqueUserID(String userID){

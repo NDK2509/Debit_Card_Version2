@@ -17,7 +17,7 @@ public class Display{
     private static final String FUNCTION_3 = "3";
     private static final String FUNCTION_4 = "4";
     private static final String LOG_OUT = "5";
-    private static final String EXIT = "6";
+    private static final String EXIT = "0";
 
     private static final String ACCBALANCE = "accbal";
     private static final String PASSWORD = "password";
@@ -80,13 +80,6 @@ public class Display{
             } catch (Exception e){}
     }
     private static boolean menu(){
-        if (card.isLocked()) {
-            try {
-                System.out.println("YOUR CARD IS LOCKED! Please, contact with our manager to unlock your card!");
-                Thread.sleep(2500);
-            } catch (Exception e){}
-            return false;
-        }
         System.out.println("""
         ---------------------------
         -----------K_ATM-----------
@@ -106,15 +99,21 @@ public class Display{
         
     }
     private static boolean choose(String choice){
+        if (card.isLocked()) {
+            try {
+                System.out.println("YOUR CARD IS LOCKED! Please, contact with our manager to unlock your card!");
+                Thread.sleep(2500);
+            } catch (Exception e){}
+            return false;
+        }
+        System.out.println("\033\143");
         switch (choice){
             case FUNCTION_1 -> {
-                System.out.println("\033\143");
                 System.out.printf("Your account balance is $%d.\n", card.getAccBal());
                 System.out.println("\nPress Enter to continue!");
                 sc.nextLine();
             }
             case FUNCTION_2 -> {
-                System.out.println("\033\143");
                 int cash = Check.inputDrawing(card);
                 user.drawMoney(cash, card);
                 String accBal = Long.toString(card.getAccBal());
@@ -125,7 +124,6 @@ public class Display{
                 sc.nextLine();
             }
             case FUNCTION_3 -> {
-                System.out.println("\033\143");
                 Card transfered_card;
                 while (true){
                     String cardNum = Check.inputCardNum("Enter the card number which you want to transfer money: ");
@@ -152,7 +150,6 @@ public class Display{
                 sc.nextLine();     
             }
             case FUNCTION_4 -> {
-                System.out.println("\033\143");
                 if (enterPassword(card)){
                     System.out.println("*Attention: New password must be 8 numeric characters!");
                     String newPassword = Check.inputPassword("Enter your new password: ");
@@ -176,7 +173,6 @@ public class Display{
                 return false;
             }
             case EXIT -> {
-                System.out.println("\033\143");
                 System.out.println("Exit ATM Machine...");
                 System.exit(0);
             }

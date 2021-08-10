@@ -30,10 +30,8 @@ public class Manager {
             String address = sc.nextLine();
 
         PutData.write_User(userID, name);
-        GetData.mapUser.put(userID, new User(userID, name));
-
         PutData.write_Info(userID, idCard, birthday, phoneNum, email, address);
-        GetData.mapUser.get(userID).setInfo(new InfoUser(idCard, birthday, phoneNum, email, address));
+        
     }
 
     public void create_Card(){
@@ -56,10 +54,19 @@ public class Manager {
         long accBal = Check.inputInt("Enter Account Balance: ");
         System.out.println("*Attention: Password of a card must be 8 numeric characters!");
         String password = Check.inputPassword("Enter Card Password: ");
+
         PutData.write_Card(userID, cardNum, regisDate, cardType, accBal, password, TRUE_STATUS);
-        String userName = GetData.mapUser.get(userID).getName();
-        GetData.mapUser.get(userID).addCard(new Card(cardNum, userName, regisDate, cardType, accBal, password, true));
-        
+    }
+    public void showAllUsers(){
+        System.out.printf("%-8s %s\n\n", "User ID", "User Name");
+        for (User user : GetData.mapUser.values())
+            System.out.println(user);
+    }
+    public void showAllCards(){
+        System.out.printf("%-9s  %-25s  %-10s  %-14s  %-13s  %8s\n\n", "Card Num", "User Name", "RegisDate", "Type Of Card", "Acc Balance", "Password");
+        for (User user : GetData.mapUser.values())
+            for (Card card : user.getListCard().values())
+                System.out.println(card);
     }
     public void unLockCard(Card card){
         if (card.isLocked()) {
@@ -92,9 +99,6 @@ public class Manager {
             Thread.sleep(1500);
         } catch (Exception e) {}
     }
-    public void rechargeMoney(int cash, Card card){
-        card.setAccBal(card.getAccBal() + cash);
-    }
     public Card findCardNum(String cardNum){
         for (User user : GetData.mapUser.values()){
             Card card = user.getCard(cardNum);
@@ -110,6 +114,9 @@ public class Manager {
         for (User user : mapUser.values())
             if (user.getCard(card.getCardNum()) != null ) return user;
         return null;
+    }
+    public void rechargeMoney(int cash, Card card){
+        card.setAccBal(card.getAccBal() + cash);
     }
     public void removeCard(Card card){
         User user = userOf(card);

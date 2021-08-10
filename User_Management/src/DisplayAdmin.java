@@ -16,6 +16,8 @@ public class DisplayAdmin {
     private static final String FUNCTION_7 = "7";
     private static final String FUNCTION_8 = "8";
     private static final String FUNCTION_9 = "9";
+    private static final String FUNCTION_10 = "10";
+    private static final String FUNCTION_11 = "11";
     private static final String EXIT = "0";
 
     private static final String ACCBALANCE = "accbal";
@@ -29,16 +31,18 @@ public class DisplayAdmin {
         -----------Manager-----------
         -----------------------------
 
-        1. Create a new User.
-        2. Create a new Card.
-        3. Lock a Card.
-        4. Unlock a Card.
-        5. Recharge for a Card.
-        6. User information.
-        7. Card information.
-        8. Delete User.
-        9. Delete Card.
-        0. Exit.
+        1.  Create a new User.
+        2.  Create a new Card.
+        3.  Lock a Card.
+        4.  Unlock a Card.
+        5.  Recharge for a Card.
+        6.  Show all of Users.
+        7.  Show all of Cards.
+        8.  User information.
+        9.  Card information.
+        10. Delete User.
+        11. Delete Card.
+        0.  Exit.
 
         ------------------------------
         """);
@@ -87,13 +91,23 @@ public class DisplayAdmin {
                 Card card = mg.findCardNum(cardNum);
                 if (card != null) {
                     int cash = Check.inputInt("Enter Cash Amount: ");
-                    mg.rechargeMoney(cash, card);
-                    String accBal = Long.toString(card.getAccBal());
-                    UpdateData.updateCard(card, accBal, ACCBALANCE);
-                    System.out.println(card);
-                    System.out.println("\nPress Enter to continue!");
-                    sc.nextLine();
-                } else {
+                    if (cash != 0){
+                        mg.rechargeMoney(cash, card);
+                        String accBal = Long.toString(card.getAccBal());
+                        UpdateData.updateCard(card, accBal, ACCBALANCE);
+                        System.out.printf("\n%-9s  %-25s  %-10s  %-14s  %-13s  %8s\n", "Card Num", "User Name", "RegisDate", "Type Of Card", "Acc Balance", "Password");
+                        System.out.println(card);
+                        System.out.println("\nPress Enter to continue!");
+                        sc.nextLine();
+                    }
+                    else {
+                        System.out.println("Canceled Recharging!");
+                        try {
+                            Thread.sleep(1500);
+                        } catch (Exception ex) {}
+                    }
+                }
+                else {
                     System.out.println("Card not found!");
                     try {
                         Thread.sleep(1500);
@@ -102,6 +116,16 @@ public class DisplayAdmin {
                  
             }
             case FUNCTION_6 -> {
+                mg.showAllUsers();
+                System.out.println("\nPress enter to continue!");
+                    sc.nextLine();
+            }
+            case FUNCTION_7 -> {
+                mg.showAllCards();
+                System.out.println("\nPress enter to continue!");
+                    sc.nextLine();
+            }
+            case FUNCTION_8 -> {
                 String userID = Check.inputUserID("Enter User ID: ");
                 User user = mg.findUserID(userID);
                 try {
@@ -116,11 +140,12 @@ public class DisplayAdmin {
                     } catch (Exception ex) {}
                 }
             } 
-            case FUNCTION_7 -> {
+            case FUNCTION_9 -> {
                 String cardNum = Check.inputCardNum("Enter Card Number: ");
                 Card card = mg.findCardNum(cardNum);
                 if (card != null) {
                     System.out.println("\033\143");
+                    System.out.printf("%-9s  %-25s  %-10s  %-14s  %-13s  %8s\n", "Card Num", "User Name", "RegisDate", "Type Of Card", "Acc Balance", "Password");
                     System.out.println(card);
                     System.out.println("\nPress enter to continue!");
                     sc.nextLine();
@@ -131,7 +156,7 @@ public class DisplayAdmin {
                     } catch (Exception ex) {}
                 }
             }
-            case FUNCTION_8 -> {
+            case FUNCTION_10 -> {
                 String userID = Check.inputUserID("Enter User ID: ");
                 User user = mg.findUserID(userID);
                 try {
@@ -156,7 +181,7 @@ public class DisplayAdmin {
                     } catch (Exception ex) {}
                 }
             }
-            case FUNCTION_9 -> {
+            case FUNCTION_11 -> {
                 String cardNum = Check.inputCardNum("Enter Card Number: ");
                 Card card = mg.findCardNum(cardNum);
                 try {

@@ -56,12 +56,13 @@ public class User {
     }
     @Override
     public String toString(){
-        return String.format("UserID: %s, Name: %s", userID, name);
+        return String.format("%-8s %s", userID, name);
     }
     public void printInfor(){
         System.out.printf("User ID: %s\nName: %s\n", userID, name);
         System.out.println(this.info);
         System.out.println("Cards:");
+        System.out.printf("\t%-9s  %-25s  %-10s  %-14s  %-13s  %8s\n\n", "Card Num", "User Name", "RegisDate", "Type Of Card", "Acc Balance", "Password");
         for (String i : listCard.keySet())
             System.out.println("\t" + listCard.get(i)); 
         System.out.println();

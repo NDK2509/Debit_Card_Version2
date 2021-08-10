@@ -75,9 +75,8 @@ public class Card{
     }
     @Override
     public String toString(){
-        return String.format("%s %s %d/%d/%d %s $%d Password: %s", this.cardNum, this.userName, 
-                            this.regisDate.getDay(), this.regisDate.getMonth(), this.regisDate.getYear(),
-                            this.type, this.accBal, this.password);
+        return String.format("%9s  %-25s  %10s  %-14s  $%-12d  %8s", this.cardNum, this.userName, 
+                                        this.regisDate, this.type, this.accBal, this.password);
     }
     public void protectedInfo(){
         System.out.printf("Card Number: %s\nUser: %s\n", this.cardNum, this.userName);
