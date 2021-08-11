@@ -58,7 +58,7 @@ public class Date {
         return this.day + "/" + this.month + "/" + this.year;
     }
     public static boolean isLeapYear(int year){
-        if ((year % 4 == 0 && year % 100 == 0) || (year % 400 == 0)) return true;
+        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) return true;
         return false;
     }
     public static boolean isTrue(int day, int month, int year){
